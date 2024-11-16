@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Status {
+  ATIVO
+  INATIVO
+}
+
+enum StatusAtividade {
+  ABERTA
+  CONCLUIDA
+}
+
+model Cliente {
+  id                Int        @id @default(autoincrement())
+  nome              String
+  contatoPrincipal  String
+  email             String     @unique
+  telefone          String
+  atividades        Atividade[]
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+}
+
+model Colaborador {
+  id            Int          @id @default(autoincrement())
+  nome          String
+  cargaHoraria  String
+  email         String       @unique
+  status        Status
+  atividades    Atividade[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+model Atividade {
+  id            Int          @id @default(autoincrement())
+  descricao     String
+  status        StatusAtividade
+  colaborador   Colaborador   @relation(fields: [colaboradorId], references: [id])
+  colaboradorId Int
+  cliente       Cliente       @relation(fields: [clienteId], references: [id])
+  clienteId     Int
+  fotos         String[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([colaboradorId, clienteId]) // Índice composto para otimizar as consultas
+}

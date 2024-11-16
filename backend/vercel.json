@@ -1,0 +1,13 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "src/index.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "env": {
+      "DATABASE_URL": "postgresql://postgres:senha@<host>:5432/mydb?schema=public"
+    }
+  }
+  
