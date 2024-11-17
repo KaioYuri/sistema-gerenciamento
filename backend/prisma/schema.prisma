@@ -20,6 +20,7 @@ enum StatusAtividade {
 model Cliente {
   id                Int        @id @default(autoincrement())
   nome              String
+  empresa           String
   contatoPrincipal  String
   email             String     @unique
   telefone          String
@@ -31,7 +32,7 @@ model Cliente {
 model Colaborador {
   id            Int          @id @default(autoincrement())
   nome          String
-  cargaHoraria  String
+  cargo         String
   email         String       @unique
   status        Status
   atividades    Atividade[]
