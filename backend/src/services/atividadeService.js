@@ -89,6 +89,26 @@ export const atualizarAtividade = async (id, data) => {
 };
 
 /**
+ * Atualiza o status de uma atividade pelo ID.
+ * 
+ * @param {number} id - ID da atividade a ser atualizada.
+ * @param {string} status - Novo status da atividade.
+ * @throws {Error} - Lança erro se o status for inválido.
+ * @returns {Promise<Object>} - Dados da atividade com o status atualizado.
+ */
+export const atualizarStatus = async (id, status) => {
+  // Validação do status
+  if (!['ABERTA', 'CONCLUIDA'].includes(status)) {
+    throw new Error(`Status inválido: ${status}. Valores permitidos: ABERTA, CONCLUIDA.`);
+  }
+
+  return await prisma.atividade.update({
+    where: { id },
+    data: { status },
+  });
+};
+
+/**
  * Exclui uma atividade pelo ID.
  * 
  * @param {number} id - ID da atividade a ser excluída.
@@ -128,6 +148,7 @@ export default {
   listarAtividades,
   obterAtividadePorId,
   atualizarAtividade,
+  atualizarStatus,
   deletarAtividade,
   adicionarFoto,
 };

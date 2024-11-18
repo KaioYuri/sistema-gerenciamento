@@ -1,5 +1,5 @@
 import atividadeService from '../services/atividadeService.js';
-import upload from '../middlewares/upload.js'; 
+import upload from '../middlewares/upload.js';
 
 const MENSAGENS = {
   sucessoCriar: 'Atividade criada com sucesso',
@@ -116,6 +116,28 @@ export const excluirAtividade = async (req, res) => {
       detalhes: error.message,
     });
   }
+};
+
+export const atividadeController = {
+  async updateStatus(req, res) {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!status) {
+      return res.status(400).json({ error: "O campo 'status' é obrigatório." });
+    }
+
+    try {
+      const updatedAtividade = await atividadeService.updateStatus(Number(id), status);
+      return res.status(200).json({
+        message: "Status atualizado com sucesso.",
+        atividade: updatedAtividade,
+      });
+    } catch (error) {
+      console.error("Erro no controlador de updateStatus:", error);
+      return res.status(500).json({ error: "Erro ao atualizar o status da atividade." });
+    }
+  },
 };
 
 export const adicionarFoto = async (req, res) => {

@@ -5,6 +5,7 @@ import {
   obterAtividadePorId,
   atualizarAtividade,
   excluirAtividade,
+  updateStatus,
   adicionarFoto
 } from '../controllers/atividadeController.js';
 
@@ -15,6 +16,7 @@ router.get('/', obterAtividades);                // Obter todas as atividades
 router.get("/:id", obterAtividadePorId);         // Obter atividades pelo ID
 router.put('/:id', atualizarAtividade);          // Atualizar uma atividade pelo ID
 router.delete('/:id', excluirAtividade);         // Excluir uma atividade pelo ID
+router.patch("/:id/status", updateStatus);       // Atualiza status de atividade diretamente
 router.post('/:id/foto', adicionarFoto);         // Adicionar uma foto na atividade
 
 export default router;
