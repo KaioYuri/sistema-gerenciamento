@@ -7,7 +7,7 @@
     "dev": "node src/index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Kaio Yuri",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.22.0",
