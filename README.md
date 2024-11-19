@@ -138,7 +138,7 @@ Algumas imagens da aplicação:
 
 ### Requisitos
 
-Esta aplicação utiliza `docker` para sua execução, então se você estiver no windows, é necessário baixar o `WSL` e em seguida
+Esta aplicação utiliza `docker` para sua execução, então se você estiver no windows, é necessário baixar e instalar o [WSL](https://learn.microsoft.com/pt-br/windows/wsl/install) primeiro e **em seguida**
 o [docker desktop](https://www.docker.com/products/docker-desktop/). Para usuários do linux basta apenas ter o `docker` e `docker-compose`.
 
 ### Executando o projeto
