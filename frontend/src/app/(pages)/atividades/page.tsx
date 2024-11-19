@@ -15,7 +15,7 @@ import { AtividadesTable } from "@/components/tables/table-atividades";
 
 export default function AtividadesPage() {
   return (
-    <ContentLayout title="Pesquisar cliente">
+    <ContentLayout title="Pesquisar atividade">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>

@@ -3,6 +3,105 @@
 Sistema de gerenciamento construido com [shadcn/ui](https://ui.shadcn.com) completo com responsividade para ambientes mobile e desktop.
 Feito para um processo seletivo.
 
+## Arquitetura
+No projeto foi utilizada a seguinte arquitetura abaixo como base:
+
+#### No backend:
+
+Eu dividi a API do backend em controllers, services e routes para melhorar a organização, manutenção e escalabilidade do código.
+- `Routes`: Definem as rotas e direcionam as requisições para os controladores correspondentes, mantendo a lógica de roteamento separada.
+- `Controllers`: Centralizam a lógica de tratamento de requisições, gerenciando a interação entre as rotas e os serviços.
+- `Services`: Contêm a lógica de negócios e operações específicas, desacoplando-a dos controladores para facilitar testes e reaproveitamento de código.
+- `Prisma Client`: É uma ferramenta para interagir com o banco de dados na aplicação de forma eficiente e simplificada. Ele é um ORM (Object-Relational Mapping) que permite, Consultar dados, Gerenciar relações, Validar e Abstrair queries complexas.
+
+#### No frontend:
+- Foram utilizados componentes e elementos UI para deixar a aplicação dinamica e moderna, além de ter `tipagem` dos dados e `services` para a comunicação com o backend.
+
+
+#### No Banco de dados:
+- Criados as tabelas baseado nos models do prisma:
+```prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Status {
+  ATIVO
+  INATIVO
+}
+
+enum StatusAtividade {
+  ABERTA
+  CONCLUIDA
+}
+
+model Cliente {
+  id                Int        @id @default(autoincrement())
+  nome              String
+  empresa           String
+  contatoPrincipal  String
+  email             String     @unique
+  telefone          String
+  atividades        Atividade[]
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+}
+
+model Colaborador {
+  id            Int          @id @default(autoincrement())
+  nome          String
+  cargo         String
+  email         String       @unique
+  status        Status
+  atividades    Atividade[]
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+}
+
+model Atividade {
+  id            Int          @id @default(autoincrement())
+  descricao     String
+  status        StatusAtividade
+  colaborador   Colaborador   @relation(fields: [colaboradorId], references: [id])
+  colaboradorId Int
+  cliente       Cliente       @relation(fields: [clienteId], references: [id])
+  clienteId     Int
+  fotos         String[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([colaboradorId, clienteId])
+}
+
+```
+![Arquitetura](./frontend/public/screenshots/arquitetura.jpg)
+
+## Screenshots
+
+Algumas imagens da aplicação:
+
+1. Home (desktop):
+![Home](./frontend/public/screenshots/home.png)
+
+2. Pesquisa (desktop):
+![Pesquisa](./frontend/public/screenshots/pesquisa.png)
+
+3. Registrar atividade (desktop / tema preto):
+![Registrar atividade](./frontend/public/screenshots/atividade-registro.png)
+
+4. Pesquisar atividade (mobile / tema preto):
+![Pesquisar atividade](./frontend/public/screenshots/mobile.png)
+
+5. Sidebar (mobile / tema preto):
+![Sidebar](./frontend/public/screenshots/mobile-sidebar.png)
+
+
+
 ## Features
 
 - Barra lateral retrátil, mini e larga
